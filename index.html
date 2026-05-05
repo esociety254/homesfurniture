@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaba Home • Premium Furniture Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --wood: #8D5524;
+        }
+        
+        .tail-container {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', sans-serif;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://picsum.photos/id/1015/2000/1200');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #8D5524;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .section-header {
+            position: relative;
+        }
+        
+        .section-header:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #8D5524, #D4A017);
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .video-container {
+            position: relative;
+        }
+        
+        .video-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .video-container:hover::after {
+            opacity: 1;
+        }
+
+        .cart-slide {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        
+        .cart-slide.open {
+            transform: translateX(0);
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="tail-container bg-[#0F0C09] text-[#F5F0E6] smooth-scroll overflow-x-hidden">
+    <!-- NAVBAR -->
+    <nav class="bg-[#0F0C09]/90 backdrop-blur-lg border-b border-[#3A2F1F] fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-amber-800 to-yellow-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🪑</div>
+                <div>
+                    <span class="heading-font text-3xl tracking-tighter font-bold">MALABA</span>
+                    <span class="text-xs tracking-[2px] text-amber-300 block -mt-1">HOME</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="#shop" onclick="navigateToSection('shop')" class="nav-link cursor-pointer">SHOP</a>
+                <a href="#living" onclick="navigateToSection('living')" class="nav-link cursor-pointer">LIVING</a>
+                <a href="#bedroom" onclick="navigateToSection('bedroom')" class="nav-link cursor-pointer">BEDROOM</a>
+                <a href="#dining" onclick="navigateToSection('dining')" class="nav-link cursor-pointer">DINING</a>
+                <a href="#about" onclick="navigateToSection('about')" class="nav-link cursor-pointer">OUR STORY</a>
+            </div>
+
+            <div class="flex items-center gap-x-6">
+                <button onclick="toggleSearch()" class="text-xl hover:text-amber-300 transition-colors">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <button onclick="toggleWishlist()" class="text-xl hover:text-amber-300 transition-colors relative">
+                    <i class="fa-solid fa-heart"></i>
+                    <span id="wishlist-count" class="absolute -top-1 -right-1 text-[10px] bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">3</span>
+                </button>
+                <button onclick="toggleCart()" class="text-xl hover:text-amber-300 transition-colors relative">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 text-[10px] bg-amber-600 text-white w-4 h-4 flex items-center justify-center rounded-full">2</span>
+                </button>
+                <div class="w-8 h-8 bg-[#3A2F1F] rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="https://picsum.photos/id/64/128/128" alt="Profile" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="hero" class="hero-bg h-screen flex items-center relative">
+        <div class="max-w-5xl mx-auto px-6 text-center z-10">
+            <div class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur-md px-6 py-2.5 rounded-3xl text-sm mb-6 border border-white/20">
+                <span class="text-emerald-400">✦</span>
+                <span class="tracking-widest">KENYA'S FINEST FURNITURE</span>
+            </div>
+            
+            <h1 class="heading-font text-7xl md:text-8xl font-bold leading-none tracking-tighter mb-6">
+                FURNITURE THAT<br>TELLS YOUR STORY
+            </h1>
+            
+            <p class="max-w-md mx-auto text-lg text-[#C9B9A0] mb-10">
+                Handcrafted Kenyan hardwood pieces. Timeless design. Built to last generations.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="navigateToSection('shop')" 
+                        class="bg-white text-[#0F0C09] hover:bg-amber-100 transition-all px-10 py-6 rounded-3xl text-lg font-semibold flex items-center justify-center gap-x-3 group">
+                    SHOP COLLECTION
+                    <span class="text-2xl group-active:rotate-45 transition">→</span>
+                </button>
+                
+                <button onclick="watchVideo()" 
+                        class="border border-white/70 hover:border-white px-8 py-6 rounded-3xl text-lg font-medium flex items-center gap-x-3 transition-all">
+                    <i class="fa-solid fa-play"></i>
+                    WATCH CRAFTSMANSHIP
+                </button>
+            </div>
+            
+            <div class="mt-16 flex justify-center gap-x-8 text-sm">
+                <div class="text-center">
+                    <div class="text-3xl font-semibold text-emerald-400">30</div>
+                    <div class="text-[#C9B9A0]">DAY RETURN</div>
+                </div>
+                <div class="h-8 w-px bg-white/20"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-semibold">100%</div>
+                    <div class="text-[#C9B9A0]">HARDWOOD</div>
+                </div>
+                <div class="h-8 w-px bg-white/20"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-semibold text-amber-400">Lipa</div>
+                    <div class="text-[#C9B9A0]">Mdogo Mdogo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll prompt -->
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center gap-y-2 text-xs tracking-widest">
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/40 to-transparent"></div>
+            SCROLL TO EXPLORE
+        </div>
+    </header>
+
+    <!-- TRUST BAR -->
+    <div class="bg-[#1C140F] py-6 border-b border-[#3A2F1F]">
+        <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-center items-center gap-x-12 gap-y-6 text-sm">
+            <div class="flex items-center gap-x-4">
+                <i class="fa-solid fa-truck text-2xl text-amber-400"></i>
+                <div>
+                    <div class="font-semibold">FREE Delivery in Kenya</div>
+                    <div class="text-xs text-[#C9B9A0]">Nairobi • Mombasa • Kisumu</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <i class="fa-solid fa-shield-halved text-2xl text-emerald-400"></i>
+                <div>
+                    <div class="font-semibold">2 Year Warranty</div>
+                    <div class="text-xs text-[#C9B9A0]">On all solid wood pieces</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <i class="fa-solid fa-handshake text-2xl text-amber-400"></i>
+                <div>
+                    <div class="font-semibold">M-PESA &amp; Card</div>
+                    <div class="text-xs text-[#C9B9A0]">Secure checkout</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <section id="shop" class="py-24 bg-[#0F0C09]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="uppercase text-amber-400 text-sm tracking-[3px]">Discover</span>
+                    <h2 class="heading-font text-5xl font-bold">Our Collections</h2>
+                </div>
+                <a href="#" onclick="navigateToSection('shop')" class="flex items-center gap-x-2 group text-sm font-medium">
+                    VIEW ALL 
+                    <span class="transition group-hover:translate-x-2">→</span>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Category Cards -->
+                <div onclick="filterByCategory('living')" class="group cursor-pointer">
+                    <div class="aspect-square bg-[#1C140F] rounded-3xl overflow-hidden relative">
+                        <img src="https://picsum.photos/id/201/800/800" alt="Living Room" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                            <div>
+                                <div class="text-3xl font-semibold heading-font">Living Room</div>
+                                <div class="text-amber-300 text-sm">Sofas • Coffee Tables</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="filterByCategory('bedroom')" class="group cursor-pointer">
+                    <div class="aspect-square bg-[#1C140F] rounded-3xl overflow-hidden relative">
+                        <img src="https://picsum.photos/id/251/800/800" alt="Bedroom" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                            <div>
+                                <div class="text-3xl font-semibold heading-font">Bedroom</div>
+                                <div class="text-amber-300 text-sm">Beds • Wardrobes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="filterByCategory('dining')" class="group cursor-pointer">
+                    <div class="aspect-square bg-[#1C140F] rounded-3xl overflow-hidden relative">
+                        <img src="https://picsum.photos/id/312/800/800" alt="Dining" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                            <div>
+                                <div class="text-3xl font-semibold heading-font">Dining</div>
+                                <div class="text-amber-300 text-sm">Tables • Chairs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="filterByCategory('office')" class="group cursor-pointer">
+                    <div class="aspect-square bg-[#1C140F] rounded-3xl overflow-hidden relative">
+                        <img src="https://picsum.photos/id/366/800/800" alt="Office" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                            <div>
+                                <div class="text-3xl font-semibold heading-font">Home Office</div>
+                                <div class="text-amber-300 text-sm">Desks • Shelves</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="py-20 bg-[#1C140F]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="section-header text-center mb-16">
+                <span class="text-amber-400 text-sm tracking-widest">CURATED FOR YOU</span>
+                <h2 class="heading-font text-5xl font-bold mt-3">Featured Pieces</h2>
+            </div>
+            
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Populated by JS -->
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="navigateToSection('shop')" 
+                        class="px-12 py-6 border border-amber-400 hover:bg-amber-400 hover:text-[#0F0C09] transition-all rounded-3xl text-lg font-semibold">
+                    BROWSE ENTIRE COLLECTION
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO STORY -->
+    <section class="py-24 bg-black relative">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="uppercase text-amber-400 tracking-widest text-sm mb-4">FROM FOREST TO HOME</div>
+                    <h2 class="heading-font text-6xl leading-none font-medium">Crafted by Kenyan hands with love</h2>
+                    <p class="mt-8 text-lg text-[#C9B9A0]">
+                        Every piece is made from sustainably sourced African hardwood by master craftsmen in our Nairobi workshop.
+                    </p>
+                    <button onclick="watchVideo()" 
+                            class="mt-10 flex items-center gap-x-4 group">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-black text-3xl shadow-xl group-active:scale-95 transition">
+                            ▶
+                        </div>
+                        <div>
+                            <div class="font-semibold text-xl">Watch the making of</div>
+                            <div class="text-amber-300">The Acacia Lounge Collection</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="video-container rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                    <video id="hero-video" loop muted playsinline class="w-full aspect-video object-cover">
+                        <source src="https://assets.mixkit.co/videos/preview/754/754-small.mp4" type="video/mp4">
+                    </video>
+                    <div onclick="toggleVideoPlay()" class="absolute inset-0 flex items-center justify-center cursor-pointer">
+                        <div id="play-button" class="w-20 h-20 bg-white/90 hover:bg-white text-black rounded-2xl flex items-center justify-center text-4xl shadow-2xl transition">
+                            ▶
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-24 bg-[#0F0C09]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-5xl">What Kenyans Say</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-[#1C140F] p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-amber-400 mb-6">★★★★★</div>
+                    <p class="italic">"The dining table arrived perfectly and has transformed our home. The quality is unmatched in Kenya."</p>
+                    <div class="mt-8 flex items-center gap-x-3">
+                        <img src="https://picsum.photos/id/64/64/64" class="w-10 h-10 rounded-2xl" alt="">
+                        <div>
+                            <div class="font-semibold">Sarah Wanjiku</div>
+                            <div class="text-xs text-[#C9B9A0]">Karen, Nairobi</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[#1C140F] p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-amber-400 mb-6">★★★★☆</div>
+                    <p class="italic">"Lipa Mdogo Mdogo made it so easy to own the bed of my dreams. Delivery was fast and professional."</p>
+                    <div class="mt-8 flex items-center gap-x-3">
+                        <img src="https://picsum.photos/id/201/64/64" class="w-10 h-10 rounded-2xl" alt="">
+                        <div>
+                            <div class="font-semibold">John Kamau</div>
+                            <div class="text-xs text-[#C9B9A0]">Mombasa</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[#1C140F] p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-amber-400 mb-6">★★★★★</div>
+                    <p class="italic">"Best investment for our family. The sofa is still looking brand new after 2 years of heavy use."</p>
+                    <div class="mt-8 flex items-center gap-x-3">
+                        <img src="https://picsum.photos/id/251/64/64" class="w-10 h-10 rounded-2xl" alt="">
+                        <div>
+                            <div class="font-semibold">Aisha Mohammed</div>
+                            <div class="text-xs text-[#C9B9A0]">Eldoret</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+        <div class="bg-[#1C140F] max-w-5xl w-full rounded-3xl overflow-hidden max-h-[95vh] overflow-y-auto">
+            <div class="flex">
+                <!-- Image / Video side -->
+                <div class="flex-1 bg-black p-8 relative" id="modal-image-container">
+                    <!-- JS injected -->
+                </div>
+                
+                <!-- Details -->
+                <div class="w-full md:w-5/12 p-10">
+                    <button onclick="closeModal()" class="float-right text-3xl leading-none hover:text-amber-300">×</button>
+                    
+                    <div id="modal-category" class="uppercase text-xs tracking-widest text-amber-400"></div>
+                    <h1 id="modal-title" class="heading-font text-4xl font-semibold mt-2 leading-tight"></h1>
+                    <div id="modal-price" class="text-4xl font-bold text-amber-300 mt-4"></div>
+                    
+                    <div class="my-8 border-t border-b border-[#3A2F1F] py-8">
+                        <div id="modal-description" class="text-[#C9B9A0] leading-relaxed"></div>
+                    </div>
+                    
+                    <!-- Payment options -->
+                    <div class="mb-8">
+                        <div class="text-sm uppercase tracking-widest mb-4">Payment Options</div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div onclick="selectPayment(this)" class="payment-option border-2 border-amber-400 bg-[#0F0C09] p-6 rounded-3xl cursor-pointer text-center">
+                                <div class="font-semibold">Full Payment</div>
+                                <div class="text-xs text-emerald-400">M-PESA • Card</div>
+                            </div>
+                            <div onclick="selectPayment(this)" class="payment-option border border-[#3A2F1F] hover:border-amber-400 p-6 rounded-3xl cursor-pointer text-center">
+                                <div class="font-semibold">Lipa Mdogo Mdogo</div>
+                                <div class="text-xs text-amber-400">KSh 2,500 / month</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="addCurrentToCart()" 
+                            class="w-full py-8 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 transition-all text-xl font-semibold rounded-3xl">
+                        ADD TO CART — SECURE CHECKOUT
+                    </button>
+                    
+                    <div class="flex justify-center gap-x-8 text-xs mt-8">
+                        <div class="flex items-center gap-x-2">
+                            <i class="fa-solid fa-truck"></i>
+                            <span>Free Delivery</span>
+                        </div>
+                        <div class="flex items-center gap-x-2">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>2 Year Warranty</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div id="cart-drawer" class="cart-slide fixed top-0 right-0 h-full w-full md:w-96 bg-[#0F0C09] border-l border-[#3A2F1F] z-[200] shadow-2xl">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl heading-font">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-4xl leading-none">×</button>
+            </div>
+            
+            <div id="cart-items" class="flex-1 overflow-auto space-y-8">
+                <!-- JS populated -->
+            </div>
+            
+            <div class="pt-8 border-t border-[#3A2F1F]">
+                <div class="flex justify-between text-xl mb-2">
+                    <span>Total</span>
+                    <span id="cart-total" class="font-bold">KSh 0</span>
+                </div>
+                <button onclick="proceedToCheckout()" 
+                        class="mt-6 w-full py-7 bg-white text-black font-semibold text-lg rounded-3xl">
+                    PROCEED TO CHECKOUT
+                </button>
+                <div class="text-center text-xs mt-6 text-[#C9B9A0]">or 4 payments of KSh 12,500 with Lipa Mdogo Mdogo</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-black pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-y-12">
+            <div>
+                <div class="flex items-center gap-x-3 mb-6">
+                    <div class="w-9 h-9 bg-gradient-to-br from-amber-700 to-amber-400 rounded-2xl flex items-center justify-center text-2xl">🪑</div>
+                    <span class="heading-font text-3xl font-bold">MALABA</span>
+                </div>
+                <p class="text-sm max-w-xs text-[#C9B9A0]">Premium Kenyan furniture crafted with passion since 2018.</p>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs mb-6 tracking-widest">Shop</div>
+                <div class="space-y-3 text-sm">
+                    <div onclick="navigateToSection('shop')" class="cursor-pointer hover:text-amber-300">Living Room</div>
+                    <div onclick="navigateToSection('shop')" class="cursor-pointer hover:text-amber-300">Bedroom</div>
+                    <div onclick="navigateToSection('shop')" class="cursor-pointer hover:text-amber-300">Dining Sets</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs mb-6 tracking-widest">Company</div>
+                <div class="space-y-3 text-sm">
+                    <div class="cursor-pointer hover:text-amber-300">Our Story</div>
+                    <div class="cursor-pointer hover:text-amber-300">Craftsmanship</div>
+                    <div class="cursor-pointer hover:text-amber-300">Sustainability</div>
+                    <div class="cursor-pointer hover:text-amber-300">Contact Us</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs mb-6 tracking-widest">Get in touch</div>
+                <div class="text-sm space-y-2">
+                    <div>+254 700 123 456</div>
+                    <div>hello@malabahome.co.ke</div>
+                    <div class="pt-4">
+                        <div class="flex gap-x-6 text-2xl">
+                            <i class="fa-brands fa-instagram cursor-pointer hover:text-pink-400"></i>
+                            <i class="fa-brands fa-whatsapp cursor-pointer hover:text-emerald-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center text-xs text-[#5C5038] mt-20">
+            © 2026 Malaba Home. All Rights Reserved. Made with ❤️ for Kenya.
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script already included
+        
+        let cart = [];
+        let currentProduct = null;
+        
+        const products = [
+            {
+                id: 1,
+                title: "Acacia Royale Sofa",
+                price: 89500,
+                category: "Living",
+                img: "https://picsum.photos/id/201/600/600",
+                video: "https://assets.mixkit.co/videos/preview/754/754-small.mp4",
+                description: "Handcrafted from solid African Acacia. Deep seating comfort with premium upholstery."
+            },
+            {
+                id: 2,
+                title: "Kingston Four Poster Bed",
+                price: 124500,
+                category: "Bedroom",
+                img: "https://picsum.photos/id/251/600/600",
+                description: "Majestic solid mahogany bed. A true heirloom piece."
+            },
+            {
+                id: 3,
+                title: "Mombasa Dining Table",
+                price: 67500,
+                category: "Dining",
+                img: "https://picsum.photos/id/312/600/600",
+                description: "Seats 8 comfortably. Made from reclaimed railway sleepers."
+            },
+            {
+                id: 4,
+                title: "Executive Teak Desk",
+                price: 48500,
+                category: "Office",
+                img: "https://picsum.photos/id/366/600/600",
+                description: "Solid teak with leather inlays. Built for legacy."
+            }
+        ];
+        
+        function renderProducts(filteredProducts = products) {
+            const container = document.getElementById("product-grid");
+            container.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const cardHTML = `
+                    <div onclick="showProductModal(${product.id})" class="product-card bg-[#1C140F] rounded-3xl overflow-hidden cursor-pointer group">
+                        <div class="relative">
+                            <img src="${product.img}" class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105" alt="${product.title}">
+                            <div class="absolute top-4 right-4 bg-black/70 text-xs px-3 py-1 rounded-3xl backdrop-blur">
+                                ${product.category}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-semibold text-xl leading-tight">${product.title}</div>
+                            <div class="text-amber-300 text-2xl font-bold mt-3">KSh ${product.price.toLocaleString()}</div>
+                            <button onclick="event.stopImmediatePropagation(); quickAddToCart(${product.id});" 
+                                    class="mt-6 text-xs w-full py-4 border border-white/30 hover:border-amber-300 transition rounded-2xl">
+                                ADD TO CART
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+        
+        function showProductModal(id) {
+            currentProduct = products.find(p => p.id === id);
+            if (!currentProduct) return;
+            
+            const modal = document.getElementById("product-modal");
+            document.getElementById("modal-title").textContent = currentProduct.title;
+            document.getElementById("modal-price").innerHTML = `KSh ${currentProduct.price.toLocaleString()}`;
+            document.getElementById("modal-description").textContent = currentProduct.description;
+            document.getElementById("modal-category").textContent = currentProduct.category.toUpperCase();
+            
+            // Image container
+            const imgContainer = document.getElementById("modal-image-container");
+            imgContainer.innerHTML = `
+                <img src="${currentProduct.img}" class="w-full h-full object-cover" alt="">
+                <div onclick="event.stopImmediatePropagation()" class="absolute bottom-8 right-8 bg-white/90 text-black text-sm font-medium px-6 py-3 rounded-3xl flex items-center gap-x-2 cursor-pointer">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Watch Video</span>
+                </div>
+            `;
+            
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById("product-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+        
+        function quickAddToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            
+            cart.push({...product, quantity: 1});
+            updateCartCount();
+            showToast(`${product.title} added to cart`);
+            event.stopImmediatePropagation();
+        }
+        
+        function addCurrentToCart() {
+            if (!currentProduct) return;
+            cart.push({...currentProduct, quantity: 1});
+            updateCartCount();
+            showToast("Added to cart");
+            closeModal();
+        }
+        
+        function updateCartCount() {
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+        
+        function toggleCart() {
+            const drawer = document.getElementById("cart-drawer");
+            drawer.classList.toggle("open");
+            
+            if (drawer.classList.contains("open")) {
+                renderCart();
+            }
+        }
+        
+        function renderCart() {
+            const container = document.getElementById("cart-items");
+            container.innerHTML = '';
+            
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                total += item.price * (item.quantity || 1);
+                
+                const itemHTML = `
+                <div class="flex gap-6">
+                    <img src="${item.img}" class="w-24 h-24 object-cover rounded-2xl" alt="">
+                    <div class="flex-1">
+                        <div class="font-medium">${item.title}</div>
+                        <div class="text-sm text-amber-300">KSh ${item.price.toLocaleString()}</div>
+                        <div class="flex items-center gap-x-6 mt-6 text-sm">
+                            <button onclick="changeCartQty(${index}, -1)" class="w-8 h-8 border border-white/30 hover:bg-white/10 rounded-xl">-</button>
+                            <span>${item.quantity || 1}</span>
+                            <button onclick="changeCartQty(${index}, 1)" class="w-8 h-8 border border-white/30 hover:bg-white/10 rounded-xl">+</button>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-400 text-xl">✕</button>
+                </div>`;
+                container.innerHTML += itemHTML;
+            });
+            
+            document.getElementById("cart-total").textContent = `KSh ${total.toLocaleString()}`;
+        }
+        
+        function changeCartQty(index, delta) {
+            cart[index].quantity = (cart[index].quantity || 1) + delta;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            renderCart();
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+        }
+        
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            alert("🎉 Thank you! This would open a beautiful checkout experience with M-PESA, Lipa Mdogo Mdogo, and Card options.");
+            // In real version this would go to checkout flow
+        }
+        
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove("border-amber-400", "bg-[#0F0C09]");
+                option.classList.add("border-[#3A2F1F]");
+            });
+            el.classList.add("border-amber-400", "bg-[#0F0C09]");
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                background: #1C140F; color: #F5F0E6; padding: 16px 28px; border-radius: 9999px;
+                box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3); z-index: 9999; white-space: nowrap;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transition = "all 0.4s";
+                toast.style.opacity = 0;
+                toast.style.transform = "translateX(-50%) translateY(20px)";
+                setTimeout(() => toast.remove(), 400);
+            }, 2800);
+        }
+        
+        function toggleVideoPlay() {
+            const video = document.getElementById("hero-video");
+            const playBtn = document.getElementById("play-button");
+            
+            if (video.paused) {
+                video.play();
+                playBtn.innerHTML = "❚❚";
+            } else {
+                video.pause();
+                playBtn.innerHTML = "▶";
+            }
+        }
+        
+        function watchVideo() {
+            const video = document.getElementById("hero-video");
+            video.scrollIntoView({ behavior: "smooth" });
+            setTimeout(() => {
+                video.play();
+            }, 800);
+        }
+        
+        function filterByCategory(cat) {
+            const filtered = products.filter(p => p.category.toLowerCase().includes(cat));
+            renderProducts(filtered.length > 0 ? filtered : products);
+            document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
+        }
+        
+        function toggleSearch() {
+            const term = prompt("Search our collection (demo):");
+            if (term) {
+                const filtered = products.filter(p => 
+                    p.title.toLowerCase().includes(term.toLowerCase())
+                );
+                renderProducts(filtered);
+                document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
+            }
+        }
+        
+        function toggleWishlist() {
+            showToast("❤️ Added to wishlist (demo)");
+        }
+        
+        function navigateToSection(section) {
+            if (section === "shop") {
+                document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
+            } else {
+                showToast("Navigating to " + section + " collection...");
+                setTimeout(() => {
+                    document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
+                }, 400);
+            }
+        }
+        
+        // Initialize
+        function initialize() {
+            renderProducts();
+            updateCartCount();
+            
+            // Keyboard escape support
+            document.addEventListener("keydown", function(e) {
+                if (e.key === "Escape") {
+                    const modal = document.getElementById("product-modal");
+                    if (!modal.classList.contains("hidden")) closeModal();
+                    else {
+                        const cartDrawer = document.getElementById("cart-drawer");
+                        if (cartDrawer.classList.contains("open")) toggleCart();
+                    }
+                }
+            });
+            
+            // Demo: add one item to cart
+            setTimeout(() => {
+                cart.push({...products[0], quantity: 1});
+                updateCartCount();
+            }, 1800);
+            
+            console.log('%cMalaba Home - Premium Furniture Experience Loaded ✨', 'color:#D4A017; font-family:monospace');
+        }
+        
+        window.onload = initialize;
+    </script>
+</body>
+</html>
