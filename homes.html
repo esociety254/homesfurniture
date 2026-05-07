@@ -970,9 +970,134 @@ a { text-decoration:none; color:inherit; }
 }
 .toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
 
+/* ── PAGE LOADER ───────────────────────────────────────── */
+#loader {
+  position:fixed; inset:0; z-index:10000;
+  background:var(--ink);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:28px;
+  transition:opacity .7s ease, visibility .7s;
+}
+#loader.hide { opacity:0; visibility:hidden; pointer-events:none; }
+.loader-logo {
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(36px,6vw,72px);
+  font-style:italic; color:var(--gold);
+  letter-spacing:6px;
+  animation:loaderPulse 1.4s ease-in-out infinite;
+}
+@keyframes loaderPulse {
+  0%,100%{opacity:1} 50%{opacity:.3}
+}
+.loader-bar-wrap {
+  width:160px; height:1px; background:rgba(200,169,110,.15);
+  position:relative; overflow:hidden;
+}
+.loader-bar {
+  position:absolute; top:0; left:-100%; height:100%;
+  background:var(--gold);
+  animation:loaderSlide 1.2s ease-in-out infinite;
+}
+@keyframes loaderSlide {
+  0%{left:-100%} 100%{left:100%}
+}
+
+/* ── SCROLL PROGRESS BAR ───────────────────────────────── */
+#progress-bar {
+  position:fixed; top:0; left:0; height:2px;
+  background:var(--gold); z-index:9999;
+  width:0%; transition:width .1s linear;
+  transform-origin:left;
+}
+
+/* ── WHATSAPP FLOAT ────────────────────────────────────── */
+.wa-float {
+  position:fixed; bottom:32px; right:28px; z-index:8000;
+  width:54px; height:54px;
+  background:#25D366;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:24px;
+  box-shadow:0 8px 28px rgba(37,211,102,.4);
+  text-decoration:none;
+  animation:waPop .5s 2s cubic-bezier(.34,1.56,.64,1) both;
+  transition:transform .3s, box-shadow .3s;
+}
+.wa-float:hover {
+  transform:scale(1.12);
+  box-shadow:0 12px 36px rgba(37,211,102,.55);
+}
+@keyframes waPop {
+  from{transform:scale(0); opacity:0}
+  to{transform:scale(1); opacity:1}
+}
+.wa-tooltip {
+  position:absolute; right:66px; top:50%;
+  transform:translateY(-50%);
+  background:var(--ink3); border:1px solid rgba(200,169,110,.2);
+  color:var(--cream); font-size:11px; letter-spacing:1px;
+  padding:8px 14px; white-space:nowrap;
+  opacity:0; pointer-events:none;
+  transition:opacity .3s, transform .3s;
+  transform:translateY(-50%) translateX(8px);
+}
+.wa-float:hover .wa-tooltip {
+  opacity:1; transform:translateY(-50%) translateX(0);
+}
+
+/* ── BACK TO TOP ───────────────────────────────────────── */
+#backTop {
+  position:fixed; bottom:32px; left:28px; z-index:8000;
+  width:44px; height:44px;
+  background:rgba(12,9,5,.85);
+  border:1px solid rgba(200,169,110,.3);
+  color:var(--gold); font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .4s, transform .4s, border-color .3s;
+}
+#backTop.show { opacity:1; pointer-events:all; transform:translateY(0); }
+#backTop:hover { border-color:var(--gold); background:rgba(200,169,110,.1); }
+
+/* ── COOKIE BANNER ─────────────────────────────────────── */
+#cookie {
+  position:fixed; bottom:0; left:0; right:0; z-index:7500;
+  background:rgba(18,13,8,.97);
+  border-top:1px solid rgba(200,169,110,.15);
+  padding:18px clamp(20px,5vw,60px);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:20px; flex-wrap:wrap;
+  transform:translateY(100%);
+  transition:transform .6s 1.5s cubic-bezier(.25,.46,.45,.94);
+}
+#cookie.show { transform:translateY(0); }
+.cookie-txt { font-size:12px; color:var(--muted); max-width:600px; line-height:1.6; }
+.cookie-txt a { color:var(--gold); text-decoration:underline; }
+.cookie-actions { display:flex; gap:10px; flex-shrink:0; }
+.cookie-btn {
+  padding:9px 22px; font-size:10px; letter-spacing:2px;
+  text-transform:uppercase; font-family:'Outfit',sans-serif;
+  cursor:pointer; transition:all .3s;
+}
+.cookie-accept { background:var(--gold); color:var(--ink); border:none; }
+.cookie-accept:hover { background:var(--gold2); }
+.cookie-decline { background:none; border:1px solid rgba(200,169,110,.3); color:var(--muted); }
+.cookie-decline:hover { border-color:var(--gold); color:var(--gold); }
+
 </style>
 </head>
 <body>
+
+<!-- PAGE LOADER -->
+<div id="loader">
+  <div class="loader-logo">Malaba Homes</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
 
 <!-- CURSOR (desktop) -->
 <div class="c-dot" id="cDot"></div>
@@ -980,6 +1105,26 @@ a { text-decoration:none; color:inherit; }
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/254700123456" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+  <div class="wa-tooltip">Chat with us</div>
+</a>
+
+<!-- BACK TO TOP -->
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<!-- COOKIE BANNER -->
+<div id="cookie">
+  <p class="cookie-txt">We use cookies to give you the best experience on Malaba Homes. By continuing, you agree to our <a href="#">Privacy Policy</a>.</p>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-decline" onclick="dismissCookie()">Decline</button>
+    <button class="cookie-btn cookie-accept" onclick="dismissCookie()">Accept All</button>
+  </div>
+</div>
 
 <!-- ════════════════ NAV ════════════════ -->
 <nav class="nav" id="nav">
@@ -1728,6 +1873,34 @@ window.addEventListener('resize', ()=>{
   const w = card.offsetWidth+16;
   track.style.transform=`translateX(-${testiIndex*w}px)`;
 });
+
+/* ═══════ PAGE LOADER ═══════ */
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hide');
+    // show cookie after loader hides
+    setTimeout(()=>document.getElementById('cookie').classList.add('show'), 800);
+  }, 900);
+});
+
+/* ═══════ SCROLL PROGRESS BAR ═══════ */
+window.addEventListener('scroll', ()=>{
+  const scrollTop = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docH > 0 ? (scrollTop / docH) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Back to top button
+  document.getElementById('backTop').classList.toggle('show', scrollTop > 400);
+}, {passive:true});
+
+/* ═══════ COOKIE BANNER ═══════ */
+function dismissCookie(){
+  const el = document.getElementById('cookie');
+  el.style.transition = 'transform .4s ease';
+  el.style.transform = 'translateY(100%)';
+  setTimeout(()=>el.remove(), 400);
+}
 
 console.log('%c✦ MALABA HOMES ✦','color:#c8a96e;font-family:"Cormorant Garamond",serif;font-size:18px;font-style:italic;');
 </script>
